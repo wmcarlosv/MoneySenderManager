@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Service;
+use App\Models\Country;
+use App\Models\Person;
+use App\Models\Shipment;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $data = (object) [
+            'services'=>Service::all()->count(),
+            'countries'=>Country::all()->count(),
+            'persons'=>Person::all()->count(),
+            'shipments'=>Shipment::all()->count()
+        ];
+        return view('admin.dashboard', compact('data'));
     }
 }
