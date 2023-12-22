@@ -6,6 +6,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +47,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::resource('persons',PersonController::class);
     Route::resource('shipments',ShipmentController::class);
 
-    Route::get('reports-movements',[ShipmentController::class, 'reports_movements'])->name('reports.movements');
+    Route::get('reports-movements',[ReportController::class, 'reports_movements'])->name('reports.movements');
+    Route::get('reports-movements-sum-by-service',[ReportController::class, 'reports_movements_sum_by_service'])->name('reports.reports_movements_sum_by_service');
 });

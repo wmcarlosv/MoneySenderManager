@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreign('service_id')->references('id')->on('services');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->date('shipment_date')->nullable(false);
             $table->timestamps();
         });
     }

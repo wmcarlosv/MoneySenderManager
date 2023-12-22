@@ -54,7 +54,7 @@ class ShipmentController extends Controller
 
             $data[$cont] = [
                 'id'=>$ship->id,
-                'created_at'=>date('Y-m-d',strtotime($ship->created_at)),
+                'created_at'=>$ship->shipment_date,
                 'sender'=>$ship->sender->full_name,
                 'receiver'=>$ship->receiver->full_name,
                 'country'=>$ship->country->name,
@@ -107,6 +107,7 @@ class ShipmentController extends Controller
         $element->service_id = $request->service_id;
         $element->amount = $request->amount;
         $element->user_id = Auth::user()->id;
+        $element->shipment_date = date('Y-m-d');
 
         if($element->save()){
             Session::flash('success', 'Record Inserted Successfully!!');
