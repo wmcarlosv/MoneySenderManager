@@ -52,8 +52,4 @@ class ReportController extends Controller
 
         return view('admin.reports.movements', compact('title','data','from','to','sender','service','result'));
     }
-
-    public function reports_movements_sum_by_service(){
-
-    }
 }
