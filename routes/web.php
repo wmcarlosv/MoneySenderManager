@@ -22,6 +22,14 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+if (config('app.debug')) {
+    Route::get('/dev/{command}', function ($command) {
+        Artisan::call($command);
+        $output = Artisan::output();
+        dd($output);
+    });
+}
+
 Auth::routes();
 
 Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
