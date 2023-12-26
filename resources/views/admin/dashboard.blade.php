@@ -34,7 +34,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-yellow"><i class="fas fa-users"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Persons</span>
+                <span class="info-box-text">Profiles</span>
                 <span class="info-box-number">{{$data->persons}}</span>
               </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-red"><i class="fas fa-money-bill"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Shipments</span>
+                <span class="info-box-text">Activities</span>
                 <span class="info-box-number">{{$data->shipments}}</span>
               </div>
             </div>
