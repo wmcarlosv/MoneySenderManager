@@ -160,10 +160,12 @@ class PersonController extends Controller
         if($request->other_documents){
             if(count($request->other_documents) > 0){
 
-                foreach( json_decode($element->other_documents) as $od ){
-                    $images[] = $od;
+                if($element->other_documents){
+                    foreach( json_decode($element->other_documents) as $od ){
+                        $images[] = $od;
+                    }
                 }
-
+            
                 for($i=0;$i<count($request->other_documents);$i++){
                     $images[] = $request->other_documents[$i]->store('public/persons/other_documents');
                 }
