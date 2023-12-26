@@ -70,7 +70,7 @@ class PersonController extends Controller
             'email'=>'email|unique:persons',
             'phone'=>'numeric|unique:persons',
             'dni'=>'file|mimes:jpeg,jpg,png',
-            'other_documents'=>'file|mimes:jpeg,jpg,png'
+            'other_documents.*'=>'file|mimes:jpeg,jpg,png'
         ]);
 
         $element = new Person();
@@ -81,12 +81,18 @@ class PersonController extends Controller
         $element->address = $request->address;
         $element->user_id = Auth::user()->id;
 
+        $images = [];
+
         if($request->hasFile("dni")){
             $element->dni = $request->dni->store('public/persons/dnis');
         }
 
-        if($request->hasFile("other_documents")){
-            $element->other_documents = $request->other_documents->store('public/persons/other_documents');
+        if(count($request->other_documents) > 0){
+            for($i=0;$i<count($request->other_documents);$i++){
+                $images[] = $request->other_documents[$i]->store('public/persons/other_documents');
+            }
+
+            $element->other_documents = json_encode($images);
         }
 
         if($element->save()){
@@ -128,7 +134,7 @@ class PersonController extends Controller
             'email'=>'email|unique:persons,email,'.$id,
             'phone'=>'numeric|unique:persons,phone,'.$id,
             'dni'=>'file|mimes:jpeg,jpg,png',
-            'other_documents'=>'file|mimes:jpeg,jpg,png'
+            'other_documents.*'=>'file|mimes:jpeg,jpg,png'
         ]);
 
         $element = Person::findorfail($id);
@@ -139,6 +145,8 @@ class PersonController extends Controller
         $element->phone = $request->phone;
         $element->address = $request->address;
 
+        $images = [];
+
         if($request->hasFile("dni")){
             if($element->dni){
                 Storage::delete($element->dni);
@@ -147,12 +155,17 @@ class PersonController extends Controller
             $element->dni = $request->dni->store('public/persons/dnis');
         }
 
-        if($request->hasFile("other_documents")){
-            if($element->other_documents){
-                Storage::delete($element->other_documents);
+        if(count($request->other_documents) > 0){
+
+            foreach( json_decode($element->other_documents) as $od ){
+                $images[] = $od;
             }
 
-            $element->other_documents = $request->other_documents->store('public/persons/other_documents');
+            for($i=0;$i<count($request->other_documents);$i++){
+                $images[] = $request->other_documents[$i]->store('public/persons/other_documents');
+            }
+
+            $element->other_documents = json_encode($images);
         }
 
         if($element->update()){
@@ -175,8 +188,10 @@ class PersonController extends Controller
            Storage::delete($element->dni); 
         }
 
-        if($element->other_documents){
-            Storage::delete($element->other_documents);
+        if(count(json_decode($element->other_documents)) > 0){
+            foreach(json_decode($element->other_documents) as $od){
+                Storage::delete($od);
+            }
         }
         
         if($element->delete()){
@@ -186,5 +201,26 @@ class PersonController extends Controller
         }
 
         return redirect()->route('persons.index');
+    }
+
+    public function deleteImage(Request $request){
+        $person = Person::findorfail($request->person_id);
+        $images = [];
+
+        foreach(json_decode($person->other_documents) as $od){
+            if($request->delete_image != $od){
+                $images[] = $od;
+            }else{
+                Storage::delete($od);
+            }
+        }
+
+        $person->other_documents = json_encode($images);
+
+        if($person->update()){
+            return redirect()->back()->with(['success'=>'Image Deleted Successfully!!']);
+        }else{
+            return Redirect()->back()->with(['error'=>'Error Deleting The Image!!']);
+        }
     }
 }

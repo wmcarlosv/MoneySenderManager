@@ -45,6 +45,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::resource('countries',CountryController::class);
     Route::resource('services',ServiceController::class);
     Route::resource('persons',PersonController::class);
+    Route::post('delete-image', [PersonController::class, 'deleteImage'])->name('deleteImage');
     Route::resource('shipments',ShipmentController::class);
 
     Route::get('reports-movements',[ReportController::class, 'reports_movements'])->name('reports.movements');
