@@ -28,6 +28,34 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="">Dni:</label>
+                            <input type="file" class="form-control @error('dni') is-invalid @enderror" name="dni" />
+                            @error('dni')
+                               <span class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                            @if(@$data->dni)
+                            <br />
+                            <p>
+                                <a target="_blank" href="{{ asset('storage/'.str_replace('public/','',@$data->dni)) }}" class="btn btn-info">View</a>
+                            </p>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Other Documents:</label>
+                            <input type="file" class="form-control @error('other_documents') is-invalid @enderror" name="other_documents" />
+                            @error('other_documents')
+                               <span class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                            @if(@$data->other_documents)
+                            <br />
+                            <p>
+                                <a target="_blank" href="{{ asset('storage/'.str_replace('public/','',@$data->other_documents)) }}" class="btn btn-info">View</a>
+                            </p>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
                             <label for="">Email:</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ @$data->email }}" name="email" />
                             @error('email')

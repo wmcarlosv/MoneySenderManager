@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Person;
 use Session;
 use Auth;
+use Storage;
 
 class PersonController extends Controller
 {
@@ -14,7 +15,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $title = "Persons";
+        $title = "Profiles";
 
         $columns = [
             [
@@ -53,7 +54,7 @@ class PersonController extends Controller
      */
     public function create()
     {
-        $title = "New Person";
+        $title = "New Profile";
         $type = "new";
         return view('admin.persons.add-edit', compact('title','type'));
     }
@@ -67,7 +68,9 @@ class PersonController extends Controller
             'first_name'=>'required|min:4',
             'last_name'=>'required|min:4',
             'email'=>'email|unique:persons',
-            'phone'=>'numeric|unique:persons'
+            'phone'=>'numeric|unique:persons',
+            'dni'=>'file|mimes:jpeg,jpg,png',
+            'other_documents'=>'file|mimes:jpeg,jpg,png'
         ]);
 
         $element = new Person();
@@ -77,6 +80,14 @@ class PersonController extends Controller
         $element->phone = $request->phone;
         $element->address = $request->address;
         $element->user_id = Auth::user()->id;
+
+        if($request->hasFile("dni")){
+            $element->dni = $request->dni->store('public/persons/dnis');
+        }
+
+        if($request->hasFile("other_documents")){
+            $element->other_documents = $request->other_documents->store('public/persons/other_documents');
+        }
 
         if($element->save()){
             Session::flash('success', 'Record Inserted Successfully!!');
@@ -100,7 +111,7 @@ class PersonController extends Controller
      */
     public function edit(string $id)
     {
-        $title = "Edit Person";
+        $title = "Edit Profile";
         $type = "edit";
         $data = Person::findorfail($id);
         return view('admin.persons.add-edit', compact('title','type','data'));
@@ -114,8 +125,10 @@ class PersonController extends Controller
         $request->validate([
             'first_name'=>'required|min:4',
             'last_name'=>'required|min:4',
-            'email'=>'email|unique:persons, email,'.$id,
-            'phone'=>'numeric|unique:persons, phone,'.$id
+            'email'=>'email|unique:persons,email,'.$id,
+            'phone'=>'numeric|unique:persons,phone,'.$id,
+            'dni'=>'file|mimes:jpeg,jpg,png',
+            'other_documents'=>'file|mimes:jpeg,jpg,png'
         ]);
 
         $element = Person::findorfail($id);
@@ -125,6 +138,22 @@ class PersonController extends Controller
         $element->email = $request->email;
         $element->phone = $request->phone;
         $element->address = $request->address;
+
+        if($request->hasFile("dni")){
+            if($element->dni){
+                Storage::delete($element->dni);
+            }
+            
+            $element->dni = $request->dni->store('public/persons/dnis');
+        }
+
+        if($request->hasFile("other_documents")){
+            if($element->other_documents){
+                Storage::delete($element->other_documents);
+            }
+
+            $element->other_documents = $request->other_documents->store('public/persons/other_documents');
+        }
 
         if($element->update()){
             Session::flash('success', 'Record Update Successfully!!');
@@ -141,6 +170,15 @@ class PersonController extends Controller
     public function destroy(string $id)
     {
         $element = Person::findorfail($id);
+
+        if($element->dni){
+           Storage::delete($element->dni); 
+        }
+
+        if($element->other_documents){
+            Storage::delete($element->other_documents);
+        }
+        
         if($element->delete()){
             Session::flash('success', 'Record Deleted Successfully!!');
         }else{

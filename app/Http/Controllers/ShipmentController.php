@@ -17,7 +17,7 @@ class ShipmentController extends Controller
      */
     public function index()
     {
-        $title = "Shipments";
+        $title = "Activities";
 
         $columns = [
             [
@@ -75,7 +75,7 @@ class ShipmentController extends Controller
      */
     public function create()
     {
-        $title = "New Shipment";
+        $title = "New Activity";
         $type = "new";
 
         $options = [
@@ -131,7 +131,7 @@ class ShipmentController extends Controller
      */
     public function edit(string $id)
     {
-        $title = "Edit Shipment";
+        $title = "Edit Activity";
         $type = "edit";
         $data = Shipment::findorfail($id);
         

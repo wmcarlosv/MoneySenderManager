@@ -30,11 +30,6 @@ class AppServiceProvider extends ServiceProvider
                     'text'=>'Dashboard',
                     'icon'=>'fas fa-cogs',
                     'route'=>'dashboard'
-                ],
-                [
-                    'text' => 'Profile',
-                    'icon' => 'fas fa-user',
-                    'route' => 'profile'
                 ]
             );
 
@@ -56,6 +51,24 @@ class AppServiceProvider extends ServiceProvider
                                 [
                                     'text'=>'Users',
                                     'route'=>'users.index'
+                                ],
+                                [
+                                    'text' => 'Change User Data',
+                                    'route' => 'profile'
+                                ]
+                            ]
+                        ]
+                    );
+                break;
+                case 'operator':
+                    $event->menu->add(
+                        [
+                            'text'=>'Settings',
+                            'icon'=>'fas fa-list',
+                            'submenu'=>[
+                                [
+                                    'text' => 'Change User Data',
+                                    'route' => 'profile'
                                 ]
                             ]
                         ]
@@ -65,12 +78,12 @@ class AppServiceProvider extends ServiceProvider
 
             $event->menu->add(
                 [
-                    'text'=>'Persons',
+                    'text'=>'Profiles',
                     'icon'=>'fas fa-users',
                     'route'=>'persons.index'
                 ],
                 [
-                    'text'=>'Shipments',
+                    'text'=>'Activities',
                     'icon'=>'fas fa-money-bill',
                     'route'=>'shipments.index'
                 ],
