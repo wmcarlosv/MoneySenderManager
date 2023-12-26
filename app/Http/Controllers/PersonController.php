@@ -188,12 +188,14 @@ class PersonController extends Controller
            Storage::delete($element->dni); 
         }
 
-        if(count(json_decode($element->other_documents)) > 0){
-            foreach(json_decode($element->other_documents) as $od){
-                Storage::delete($od);
+        if($element->other_documents){
+            if(count(json_decode($element->other_documents)) > 0){
+                foreach(json_decode($element->other_documents) as $od){
+                    Storage::delete($od);
+                }
             }
         }
-        
+
         if($element->delete()){
             Session::flash('success', 'Record Deleted Successfully!!');
         }else{
