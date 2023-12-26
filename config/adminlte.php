@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'A MONEY CRM MONITORING',
+    'title' => 'A Money Monitoring',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>A.M.C</b> MONITORING',
+    'logo' => '<b>A Money</b> Monitoring',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

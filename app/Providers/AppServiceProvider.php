@@ -30,53 +30,29 @@ class AppServiceProvider extends ServiceProvider
                     'text'=>'Dashboard',
                     'icon'=>'fas fa-cogs',
                     'route'=>'dashboard'
-                ]
-            );
-
-            switch($role){
-                case 'admin':
-                    $event->menu->add(
+                ],
+                [
+                    'text'=>'Settings',
+                    'icon'=>'fas fa-list',
+                    'submenu'=>[
                         [
-                            'text'=>'Settings',
-                            'icon'=>'fas fa-list',
-                            'submenu'=>[
-                                [
-                                    'text'=>'Countries',
-                                    'route'=>'countries.index'
-                                ],
-                                [
-                                    'text'=>'Services',
-                                    'route'=>'services.index'
-                                ],
-                                [
-                                    'text'=>'Users',
-                                    'route'=>'users.index'
-                                ],
-                                [
-                                    'text' => 'Change User Data',
-                                    'route' => 'profile'
-                                ]
-                            ]
-                        ]
-                    );
-                break;
-                case 'operator':
-                    $event->menu->add(
+                            'text'=>'Countries',
+                            'route'=>'countries.index'
+                        ],
                         [
-                            'text'=>'Settings',
-                            'icon'=>'fas fa-list',
-                            'submenu'=>[
-                                [
-                                    'text' => 'Change User Data',
-                                    'route' => 'profile'
-                                ]
-                            ]
+                            'text'=>'Services',
+                            'route'=>'services.index'
+                        ],
+                        [
+                            'text'=>'Users',
+                            'route'=>'users.index'
+                        ],
+                        [
+                            'text' => 'Change User Data',
+                            'route' => 'profile'
                         ]
-                    );
-                break;
-            }
-
-            $event->menu->add(
+                    ]
+                ],
                 [
                     'text'=>'Profiles',
                     'icon'=>'fas fa-users',
@@ -98,7 +74,6 @@ class AppServiceProvider extends ServiceProvider
                     ]
                 ]
             );
-
         });
     }
 }

@@ -8,27 +8,25 @@
 
 @section('content')
     <div class="row">
-        @if(Auth::user()->role == 'admin')
-            <div class="col-md-12">
-                <div class="info-box">
-                  <span class="info-box-icon bg-info"><i class="fas fa-check"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Services</span>
-                    <span class="info-box-number">{{$data->services}}</span>
-                  </div>
-                </div>
+        <div class="col-md-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-info"><i class="fas fa-check"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Services</span>
+                <span class="info-box-number">{{$data->services}}</span>
+              </div>
             </div>
+        </div>
 
-            <div class="col-md-12">
-                <div class="info-box">
-                  <span class="info-box-icon bg-success"><i class="fas fa-flag"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Countries</span>
-                    <span class="info-box-number">{{$data->countries}}</span>
-                  </div>
-                </div>
+        <div class="col-md-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-success"><i class="fas fa-flag"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Countries</span>
+                <span class="info-box-number">{{$data->countries}}</span>
+              </div>
             </div>
-        @endif
+        </div>
 
         <div class="col-md-12">
             <div class="info-box">
@@ -49,6 +47,5 @@
               </div>
             </div>
         </div>
-
     </div>  
 @stop
