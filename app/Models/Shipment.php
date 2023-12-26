@@ -15,10 +15,6 @@ class Shipment extends Model
         return $this->belongsTo('App\Models\Person','sender_person_id','id');
     }
 
-    public function receiver(){
-        return $this->belongsTo('App\Models\Person','receiver_person_id','id');
-    }
-
     public function country(){
         return $this->belongsTo('App\Models\Country');
     }

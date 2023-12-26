@@ -23,12 +23,8 @@ class PersonController extends Controller
                 'key'=>'id'
             ],
             [
-                'title'=>'First Name',
+                'title'=>'Name',
                 'key'=>'first_name'
-            ],
-            [
-                'title'=>'Last Name',
-                'key'=>'last_name'
             ],
             [
                 'title'=>'Email',
@@ -66,16 +62,14 @@ class PersonController extends Controller
     {
         $request->validate([
             'first_name'=>'required|min:4',
-            'last_name'=>'required|min:4',
-            'email'=>'email|unique:persons',
-            'phone'=>'numeric|unique:persons',
+            'email'=>'email|unique:persons|nullable',
+            'phone'=>'numeric|unique:persons|nullable',
             'dni'=>'file|mimes:jpeg,jpg,png',
             'other_documents.*'=>'file|mimes:jpeg,jpg,png'
         ]);
 
         $element = new Person();
         $element->first_name = $request->first_name;
-        $element->last_name = $request->last_name;
         $element->email = $request->email;
         $element->phone = $request->phone;
         $element->address = $request->address;
@@ -132,9 +126,8 @@ class PersonController extends Controller
     {
         $request->validate([
             'first_name'=>'required|min:4',
-            'last_name'=>'required|min:4',
-            'email'=>'email|unique:persons,email,'.$id,
-            'phone'=>'numeric|unique:persons,phone,'.$id,
+            'email'=>'nullable|email|unique:persons,email,'.$id,
+            'phone'=>'nullable|numeric|unique:persons,phone,'.$id,
             'dni'=>'file|mimes:jpeg,jpg,png',
             'other_documents.*'=>'file|mimes:jpeg,jpg,png'
         ]);
@@ -142,7 +135,6 @@ class PersonController extends Controller
         $element = Person::findorfail($id);
 
         $element->first_name = $request->first_name;
-        $element->last_name = $request->last_name;
         $element->email = $request->email;
         $element->phone = $request->phone;
         $element->address = $request->address;

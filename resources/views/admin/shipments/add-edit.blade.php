@@ -13,10 +13,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Sender:</label>
-                            <select name="sender_person_id" class="form-control @error('sender_person_id') is-invalid @enderror select">
+                            <select name="sender_person_id" class="form-control @error('sender_person_id') is-invalid @enderror select-tag">
                                 <option>-</option>
                                 @foreach($options['persons'] as $person)
-                                    <option value="{{$person->id}}" @if(@$data->sender_person_id == $person->id) selected='selected' @endif>{{$person->full_name}}</option>
+                                    <option value="{{intval($person->id)}}" @if(@$data->sender_person_id == $person->id) selected='selected' @endif>{{$person->full_name}}</option>
                                 @endforeach
                             </select>
                             @error('sender_person_id')
@@ -25,12 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Receiver:</label>
-                            <select name="receiver_person_id" class="form-control @error('receiver_person_id') is-invalid @enderror select">
-                                <option>-</option>
-                                @foreach($options['persons'] as $person)
-                                    <option value="{{$person->id}}" @if(@$data->receiver_person_id == $person->id) selected='selected' @endif>{{$person->full_name}}</option>
-                                @endforeach
-                            </select>
+                            <input name="receiver_person_id" type="text" value="{{@$data->receiver_person_id}}" class="form-control @error('receiver_person_id') is-invalid @enderror" />
                             @error('receiver_person_id')
                                <span class="error invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -84,6 +79,12 @@
     <script>
         $(document).ready(function(){
             $(".select").select2();
+        });
+
+        $(document).ready(function(){
+            $(".select-tag").select2({
+                tags: true
+            });
         });
     </script>
 @stop

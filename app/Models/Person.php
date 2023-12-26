@@ -15,7 +15,7 @@ class Person extends Model
     public function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->first_name.' '.$this->last_name,
+            get: fn ($value) => $this->first_name
         );
     }
 }

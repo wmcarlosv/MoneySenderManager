@@ -46,7 +46,7 @@ class ShipmentController extends Controller
             ]
         ];
 
-        $shipments = Shipment::with('sender','receiver','country','service')->get();
+        $shipments = Shipment::with('sender','country','service')->get();
         $data = [];
         $cont = 0;
 
@@ -56,7 +56,7 @@ class ShipmentController extends Controller
                 'id'=>$ship->id,
                 'created_at'=>$ship->shipment_date,
                 'sender'=>$ship->sender->full_name,
-                'receiver'=>$ship->receiver->full_name,
+                'receiver'=>$ship->receiver_person_id,
                 'country'=>$ship->country->name,
                 'service'=>$ship->service->name,
                 'amount'=>number_format($ship->amount,'2','.',',')."$"
@@ -100,8 +100,25 @@ class ShipmentController extends Controller
             'amount'=>'required|numeric'
         ]);
 
+        $sender_person_id = null;
+
+        if( filter_var($request->sender_person_id, FILTER_VALIDATE_INT) === false ){
+            $person = Person::whereRaw('LOWER(first_name) = (?)',[strtolower($request->sender_person_id)])->get();
+            if($person->count() > 0){
+                $sender_person_id = $person[0]->id;
+            }else{
+                $person = new Person();
+                $person->first_name = ucwords($request->sender_person_id);
+                $person->user_id = Auth::user()->id;
+                $person->save();
+                $sender_person_id = $person->id;
+            }
+        }else{
+            $sender_person_id = $request->sender_person_id;
+        }
+
         $element = new Shipment();
-        $element->sender_person_id = $request->sender_person_id;
+        $element->sender_person_id = $sender_person_id;
         $element->receiver_person_id = $request->receiver_person_id;
         $element->country_id = $request->country_id;
         $element->service_id = $request->service_id;
@@ -157,8 +174,25 @@ class ShipmentController extends Controller
             'amount'=>'required|numeric'
         ]);
 
+        $sender_person_id = null;
+
+        if( filter_var($request->sender_person_id, FILTER_VALIDATE_INT) === false ){
+            $person = Person::whereRaw('LOWER(first_name) = (?)',[strtolower($request->sender_person_id)])->get();
+            if($person->count() > 0){
+                $sender_person_id = $person[0]->id;
+            }else{
+                $person = new Person();
+                $person->first_name = ucwords($request->sender_person_id);
+                $person->user_id = Auth::user()->id;
+                $person->save();
+                $sender_person_id = $person->id;
+            }
+        }else{
+            $sender_person_id = $request->sender_person_id;
+        }
+
         $element = Shipment::findorfail($id);
-        $element->sender_person_id = $request->sender_person_id;
+        $element->sender_person_id = $sender_person_id;
         $element->receiver_person_id = $request->receiver_person_id;
         $element->country_id = $request->country_id;
         $element->service_id = $request->service_id;

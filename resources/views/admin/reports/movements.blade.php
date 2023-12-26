@@ -73,7 +73,7 @@
                             <tr>
                                 <td>{{$r->shipment_date}}</td>
                                 <td>{{$r->sender->full_name}}</td>
-                                <td>{{$r->receiver->full_name}}</td>
+                                <td>{{$r->receiver_person_id}}</td>
                                 <td>{{$r->country->name}}</td>
                                 <td>{{$r->service->name}}</td>
                                 <td>{{number_format($r->amount, 2, '.',',')}} $</td>

@@ -24,7 +24,7 @@ class ReportController extends Controller
 
         $filter = $request->get('filter');
 
-        $shipments = Shipment::with('sender','receiver','country','service');
+        $shipments = Shipment::with('sender','country','service');
 
         if(!empty($filter)){
 

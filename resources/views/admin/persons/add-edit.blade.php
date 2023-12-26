@@ -11,25 +11,12 @@
                 </div>
                 @include('admin.partials.form', ['element'=>'persons', 'type'=>$type, 'id'=>@$data->id])
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">First Name:</label>
-                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" value="{{ @$data->first_name }}" name="first_name" />
-                                    @error('first_name')
-                                       <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Last Name:</label>
-                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" value="{{ @$data->last_name }}" name="last_name" />
-                                    @error('last_name')
-                                       <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="">Name:</label>
+                            <input type="text" class="form-control @error('first_name') is-invalid @enderror" value="{{ @$data->first_name }}" name="first_name" />
+                            @error('first_name')
+                               <span class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
