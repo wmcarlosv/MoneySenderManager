@@ -155,17 +155,19 @@ class PersonController extends Controller
             $element->dni = $request->dni->store('public/persons/dnis');
         }
 
-        if(count($request->other_documents) > 0){
+        if($request->other_documents){
+            if(count($request->other_documents) > 0){
 
-            foreach( json_decode($element->other_documents) as $od ){
-                $images[] = $od;
+                foreach( json_decode($element->other_documents) as $od ){
+                    $images[] = $od;
+                }
+
+                for($i=0;$i<count($request->other_documents);$i++){
+                    $images[] = $request->other_documents[$i]->store('public/persons/other_documents');
+                }
+
+                $element->other_documents = json_encode($images);
             }
-
-            for($i=0;$i<count($request->other_documents);$i++){
-                $images[] = $request->other_documents[$i]->store('public/persons/other_documents');
-            }
-
-            $element->other_documents = json_encode($images);
         }
 
         if($element->update()){
