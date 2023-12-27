@@ -48,4 +48,43 @@
             </div>
         </div>
     </div>  
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h2>Profiles That Execeed The Monthly Limit</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <th>Profile Name</th>
+                            <th>Service</th>
+                            <th>Limit</th>
+                            <th>Amount</th>
+                            <th>Difference</th>
+                        </thead>
+                        <tbody>
+                            @foreach($profiles as $profile)
+                                <tr>
+                                    <td>{{$profile->send}}</td>
+                                    <td>{{$profile->serv}}</td>
+                                    <td>{{number_format($profile->lmit,2,".",",")}} $</td>
+                                    <td>{{number_format($profile->amount,2,".",",")}} $</td>
+                                    <td>{{number_format($profile->difference,2,".",",")}} $</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            $("table").DataTable();
+        });
+    </script>
 @stop

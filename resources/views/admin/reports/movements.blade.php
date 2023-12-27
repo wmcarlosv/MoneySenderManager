@@ -2,6 +2,10 @@
 
 @section('title', $title)
 
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+@stop
+
 @section('content')
     <div class="row" style="margin-top:20px;">
        <div class="col-md-12">
@@ -80,7 +84,11 @@
                             </tr>
                        @endforeach
                        <tr>
-                           <td colspan="5" align="right"><b>Total:</b></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td align="right"><b>Total:</b></td>
                            <td>{{number_format($total, 2, '.',',')}} $</td>
                        </tr>
                    </tbody>
@@ -92,8 +100,29 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script>
         $(document).ready(function(){
+            $("table").DataTable({
+                aLengthMenu: [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "All"]
+                ],
+                iDisplayLength: -1,
+                paging:false,
+                searching:false,
+                order: [[0, 'desc']],
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+            });
             $("select").select2();
         });
     </script>
