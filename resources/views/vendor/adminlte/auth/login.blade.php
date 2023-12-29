@@ -48,9 +48,10 @@
                    placeholder="{{ __('adminlte::adminlte.password') }}">
 
             <div class="input-group-append">
-                <div class="input-group-text">
+                <button class="btn btn-success" type="button" id="view-password" data-view="n"><i class="fas fa-lock"></i></button>
+                <!--<div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+                </div>-->
             </div>
 
             @error('password')
@@ -101,4 +102,23 @@
             </a>
         </p>
     @endif
+@stop
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            $("#view-password").click(function(){
+                let view = $(this).attr("data-view");
+                if(view == 'n'){
+                    $("input[name='password']").attr("type","text");
+                    $(this).attr("data-view","y");
+                    $(this).html('<i class="fas fa-lock-open"></i>');
+                }else{
+                    $("input[name='password']").attr("type","password");
+                    $(this).attr("data-view","n");
+                    $(this).html('<i class="fas fa-lock"></i>');
+                }
+            });
+        });
+    </script>
 @stop
