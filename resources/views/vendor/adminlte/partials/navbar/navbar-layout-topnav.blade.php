@@ -27,6 +27,7 @@
                 {{-- Custom left links --}}
                 @yield('content_top_nav_left')
             </ul>
+            
         </div>
 
         {{-- Navbar right links --}}

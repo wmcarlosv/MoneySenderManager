@@ -80,7 +80,7 @@
                                 <td>{{$r->receiver_person_id}}</td>
                                 <td>{{$r->country->name}}</td>
                                 <td>{{$r->service->name}}</td>
-                                <td>{{number_format($r->amount, 2, '.',',')}} $</td>
+                                <td>${{number_format($r->amount, 2, '.',',')}}</td>
                             </tr>
                        @endforeach
                        <tr>
@@ -89,7 +89,7 @@
                            <td></td>
                            <td></td>
                            <td align="right"><b>Total:</b></td>
-                           <td>{{number_format($total, 2, '.',',')}} $</td>
+                           <td>${{number_format($total, 2, '.',',')}}</td>
                        </tr>
                    </tbody>
                </table>  

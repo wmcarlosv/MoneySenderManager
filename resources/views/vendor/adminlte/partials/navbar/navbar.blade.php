@@ -13,7 +13,19 @@
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
     </ul>
+    
+        @php
+            $si = \App\Models\StoreInfo::all();
+            if($si->count() > 0){
+                $si = $si[0];
+            }
+        @endphp
 
+        @if($si->count() > 0)
+            <div class="store-info">
+                <b>Store: </b>{{$si->name}}, <b>Address: </b>{{$si->address}}, <b>Phone: </b>{{$si->phone}}
+            </div>
+        @endif
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
         {{-- Custom right links --}}

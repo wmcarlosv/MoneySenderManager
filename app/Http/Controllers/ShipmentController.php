@@ -59,7 +59,7 @@ class ShipmentController extends Controller
                 'receiver'=>$ship->receiver_person_id,
                 'country'=>$ship->country->name,
                 'service'=>$ship->service->name,
-                'amount'=>number_format($ship->amount,'2','.',',')."$"
+                'amount'=>"$".number_format($ship->amount,'2','.',',')
             ];
 
             $cont++;
