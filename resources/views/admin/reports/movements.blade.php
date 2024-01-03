@@ -75,7 +75,7 @@
                             $total+=floatval($r->amount);
                            @endphp
                             <tr>
-                                <td>{{$r->shipment_date}}</td>
+                                <td>{{date('m-d-Y',strtotime($r->shipment_date))}}</td>
                                 <td>{{$r->sender->full_name}}</td>
                                 <td>{{$r->receiver_person_id}}</td>
                                 <td>{{$r->country->name}}</td>

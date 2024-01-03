@@ -7,6 +7,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StoreInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,4 +51,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
 
     Route::get('reports-movements',[ReportController::class, 'reports_movements'])->name('reports.movements');
     Route::get('reports-movements-sum-by-service',[ReportController::class, 'reports_movements_sum_by_service'])->name('reports.reports_movements_sum_by_service');
+
+    Route::get('store-info',[StoreInfoController::class, 'index'])->name('store_info.get');
+    Route::post('store-info',[StoreInfoController::class, 'save_store_info'])->name('store_info.post');
 });

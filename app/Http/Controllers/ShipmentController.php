@@ -54,7 +54,7 @@ class ShipmentController extends Controller
 
             $data[$cont] = [
                 'id'=>$ship->id,
-                'created_at'=>$ship->shipment_date,
+                'created_at'=>date('m-d-Y',strtotime($ship->shipment_date)),
                 'sender'=>$ship->sender->full_name,
                 'receiver'=>$ship->receiver_person_id,
                 'country'=>$ship->country->name,

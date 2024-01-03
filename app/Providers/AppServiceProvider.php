@@ -25,6 +25,15 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
 
             $role = Auth::user()->role;
+            $extra = [];
+
+            if($role == 'admin'){
+                $extra = [
+                    'text'=>'Store Info',
+                    'route'=>'store_info.get'
+                ];
+            }
+
             $event->menu->add(
                 [
                     'text'=>'Dashboard',
@@ -50,7 +59,8 @@ class AppServiceProvider extends ServiceProvider
                         [
                             'text' => 'Change User Data',
                             'route' => 'profile'
-                        ]
+                        ],
+                        $extra
                     ]
                 ],
                 [
