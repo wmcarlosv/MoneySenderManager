@@ -125,6 +125,7 @@ class ShipmentController extends Controller
         $element->amount = $request->amount;
         $element->user_id = Auth::user()->id;
         $element->shipment_date = date('Y-m-d');
+        $element->note = $request->note;
 
         if($element->save()){
             Session::flash('success', 'Record Inserted Successfully!!');
@@ -197,6 +198,7 @@ class ShipmentController extends Controller
         $element->country_id = $request->country_id;
         $element->service_id = $request->service_id;
         $element->amount = $request->amount;
+        $element->note = $request->note;
 
         if($element->update()){
             Session::flash('success', 'Record Update Successfully!!');

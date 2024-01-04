@@ -65,6 +65,14 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="">Note:</label>
+                            <textarea name="note" class="form-control @error('note') is-invalid @enderror">{{@$data->note}}</textarea>
+                            @error('note')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                     </div>
                     <div class="card-footer">
                         @include('admin.partials.buttons',['cancelRoute'=>'shipments.index'])

@@ -42,16 +42,22 @@
                 @method('PUT')
                 @csrf
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="">Password:</label>
-                        <input type="password" name="password" required class="form-control @error('password') is-invalid @enderror" />
+                    <div class="input-group">
+                        <input type="password" name="password" placeholder="Password" required class="form-control @error('password') is-invalid @enderror" />
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" id="view-password" data-view="n"><i class="fas fa-lock"></i></button>
+                        </div>
                         @error('password')
                             <span class="error invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="">Repeat Password:</label>
-                        <input type="password" name="password_confirmation" required class="form-control @error('password_confirmation') is-invalid @enderror" />
+                    <br />
+                    <div class="input-group">
+                        <input type="password" name="password_confirmation" placeholder="Repeat Password" required class="form-control @error('password_confirmation') is-invalid @enderror" />
+
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" id="view-password-repeat" data-view="n"><i class="fas fa-lock"></i></button>
+                        </div>
                         @error('password_confirmation')
                             <span class="error invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -68,4 +74,33 @@
 
 @section('js')
     @include('admin.partials.messages')
+     <script>
+        $(document).ready(function(){
+            $("#view-password").click(function(){
+                let view = $(this).attr("data-view");
+                if(view == 'n'){
+                    $("input[name='password']").attr("type","text");
+                    $(this).attr("data-view","y");
+                    $(this).html('<i class="fas fa-lock-open"></i>');
+                }else{
+                    $("input[name='password']").attr("type","password");
+                    $(this).attr("data-view","n");
+                    $(this).html('<i class="fas fa-lock"></i>');
+                }
+            });
+
+            $("#view-password-repeat").click(function(){
+                let view = $(this).attr("data-view");
+                if(view == 'n'){
+                    $("input[name='password_confirmation']").attr("type","text");
+                    $(this).attr("data-view","y");
+                    $(this).html('<i class="fas fa-lock-open"></i>');
+                }else{
+                    $("input[name='password_confirmation']").attr("type","password");
+                    $(this).attr("data-view","n");
+                    $(this).html('<i class="fas fa-lock"></i>');
+                }
+            });
+        });
+    </script>
 @stop
