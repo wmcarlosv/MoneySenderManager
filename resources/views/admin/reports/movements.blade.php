@@ -2,10 +2,6 @@
 
 @section('title', $title)
 
-@section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-@stop
-
 @section('content')
     <div class="row" style="margin-top:20px;">
        <div class="col-md-12">
@@ -54,8 +50,14 @@
                         <div class="col-md-2">
                                 <button class="btn btn-success" style="margin-top: 31px;">Filter</button>
                         </div>
+                        
                     </div>
                 </form>
+
+                <div class="row" style="padding-left: 9px;">
+                    <a href="{{route('reports.export_report_movements')}}" class="btn btn-info"><i class="fas fa-arrow-down"></i> Exportar Excel</a>
+                </div>
+
                 <table class="table table-striped table-bordered">
                    <thead>
                        <th>Date</th>
@@ -100,11 +102,6 @@
 @stop
 
 @section('js')
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script>
         $(document).ready(function(){
             $("table").DataTable({
@@ -115,13 +112,7 @@
                 iDisplayLength: -1,
                 paging:false,
                 searching:false,
-                order: [[0, 'desc']],
-                dom: 'Bfrtip',
-                buttons: [
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5'
-                ]
+                order: [[0, 'desc']]
             });
             $("select").select2();
         });

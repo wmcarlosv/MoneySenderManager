@@ -51,6 +51,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
 
     Route::get('reports-movements',[ReportController::class, 'reports_movements'])->name('reports.movements');
     Route::get('reports-movements-sum-by-service',[ReportController::class, 'reports_movements_sum_by_service'])->name('reports.reports_movements_sum_by_service');
+    Route::get('export-report-movement', [ReportController::class, 'export_movements'])->name('reports.export_report_movements');
 
     Route::get('store-info',[StoreInfoController::class, 'index'])->name('store_info.get');
     Route::post('store-info',[StoreInfoController::class, 'save_store_info'])->name('store_info.post');
