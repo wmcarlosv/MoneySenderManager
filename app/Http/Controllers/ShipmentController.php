@@ -97,7 +97,8 @@ class ShipmentController extends Controller
             'receiver_person_id'=>'required',
             'country_id'=>'required',
             'service_id'=>'required',
-            'amount'=>'required|numeric'
+            'amount'=>'required|numeric',
+            'shipment_date'=>'required'
         ]);
 
         $sender_person_id = null;
@@ -124,7 +125,7 @@ class ShipmentController extends Controller
         $element->service_id = $request->service_id;
         $element->amount = $request->amount;
         $element->user_id = Auth::user()->id;
-        $element->shipment_date = date('Y-m-d');
+        $element->shipment_date = $request->shipment_date;
         $element->note = $request->note;
 
         if($element->save()){
@@ -172,7 +173,8 @@ class ShipmentController extends Controller
             'receiver_person_id'=>'required',
             'country_id'=>'required',
             'service_id'=>'required',
-            'amount'=>'required|numeric'
+            'amount'=>'required|numeric',
+            'shipment_date'=>'required'
         ]);
 
         $sender_person_id = null;
@@ -199,6 +201,7 @@ class ShipmentController extends Controller
         $element->service_id = $request->service_id;
         $element->amount = $request->amount;
         $element->note = $request->note;
+        $element->shipment_date = $request->shipment_date;
 
         if($element->update()){
             Session::flash('success', 'Record Update Successfully!!');

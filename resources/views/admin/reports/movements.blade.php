@@ -55,7 +55,7 @@
                 </form>
 
                 <div class="row" style="padding-left: 9px;">
-                    <a href="{{route('reports.export_report_movements')}}" class="btn btn-info"><i class="fas fa-arrow-down"></i> Exportar Excel</a>
+                    <a href="{{route('reports.export_report_movements')}}?from={{@$from}}&to={{@$to}}&sender={{@$sender}}&service={{@$service}}" class="btn btn-info"><i class="fas fa-arrow-down"></i> Exportar Excel</a>
                 </div>
 
                 <table class="table table-striped table-bordered">
@@ -85,14 +85,14 @@
                                 <td>${{number_format($r->amount, 2, '.',',')}}</td>
                             </tr>
                        @endforeach
-                       <tr>
+                       <!--<tr>
                            <td></td>
                            <td></td>
                            <td></td>
                            <td></td>
                            <td align="right"><b>Total:</b></td>
                            <td>${{number_format($total, 2, '.',',')}}</td>
-                       </tr>
+                       </tr>-->
                    </tbody>
                </table>  
             </div>

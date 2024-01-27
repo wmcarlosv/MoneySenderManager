@@ -66,6 +66,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="">Activity Date:</label>
+                            <input type="date" class="form-control @error('shipment_date') is-invalid @enderror" name="shipment_date" value="{{@$data->shipment_date}}" />
+                            @error('shipment_date')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="">Note:</label>
                             <textarea name="note" class="form-control @error('note') is-invalid @enderror">{{@$data->note}}</textarea>
                             @error('note')
