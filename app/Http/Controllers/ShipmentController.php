@@ -226,4 +226,11 @@ class ShipmentController extends Controller
 
         return redirect()->route('shipments.index');
     }
+
+    public function update_date($id, $date){
+        $shipment = Shipment::findorfail($id);
+        $shipment->shipment_date = $date;
+        $shipment->update();
+        return response()->json(['success'=>true, 'normal_date'=> $shipment->shipment_date,'data'=>date('m-d-Y',strtotime($shipment->shipment_date)) ]);
+    }
 }

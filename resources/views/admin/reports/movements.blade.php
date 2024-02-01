@@ -55,7 +55,9 @@
                 </form>
 
                 <div class="row" style="padding-left: 9px;">
-                    <a href="{{route('reports.export_report_movements')}}?from={{@$from}}&to={{@$to}}&sender={{@$sender}}&service={{@$service}}" class="btn btn-info"><i class="fas fa-arrow-down"></i> Exportar Excel</a>
+                    <a href="{{route('reports.export_report_movements')}}?from={{@$from}}&to={{@$to}}&sender={{@$sender}}&service={{@$service}}" class="btn btn-info"><i class="fas fa-arrow-down"></i> Exportar Excel</a> 
+
+                    &nbsp;<a href="{{route('reports.export_report_movements_pdf')}}?from={{@$from}}&to={{@$to}}&sender={{@$sender}}&service={{@$service}}" class="btn btn-success"><i class="fas fa-arrow-down"></i> Exportar Pdf</a>
                 </div>
 
                 <table class="table table-striped table-bordered">
@@ -77,7 +79,7 @@
                             $total+=floatval($r->amount);
                            @endphp
                             <tr>
-                                <td>{{date('m-d-Y',strtotime($r->shipment_date))}}</td>
+                                <td><span data-value="{{$r->shipment_date}}" id="date_container_{{$r->id}}">{{date('m-d-Y',strtotime($r->shipment_date))}}</span> <a href="#" class="btn btn-info date_edit" data-parent="{{$r->id}}" data-is-edit="0"><i class="fas fa-edit"></i></a></td>
                                 <td>{{$r->sender->full_name}}</td>
                                 <td>{{$r->receiver_person_id}}</td>
                                 <td>{{$r->country->name}}</td>
@@ -115,6 +117,31 @@
                 order: [[0, 'desc']]
             });
             $("select").select2();
+
+            $("body").on('click','a.date_edit', function(){
+                let parent = $(this).attr("data-parent");
+                let span = $("#date_container_"+parent);
+                let text = span.attr("data-value");
+                let isEdit = $(this).attr("data-is-edit");
+
+
+                if(parseInt(isEdit) == 0){
+                    span.html("<input type='date' style='width:200px; display:inline;' class='form-control' id='input_container_"+parent+"' value='"+text+"'>");
+                    $(this).attr("data-is-edit", 1).html('<i class="fas fa-save"></i></a>').removeClass("btn-info").addClass('btn-success');
+                }else{
+                    let input = $("#input_container_"+parent);
+                    $.get('update-date-shipment/'+parent+'/'+input.val(), function(response){
+                        if(response.success){
+                            span.text(response.data);
+                            span.attr("data-value",response.normal_date);
+                        }
+                    });
+                    
+                    $(this).attr("data-is-edit", 0).html('<i class="fas fa-edit"></i>').removeClass("btn-success").addClass('btn-info');
+                }
+
+                return false;
+            });
         });
     </script>
 @stop

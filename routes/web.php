@@ -48,10 +48,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function(){
     Route::resource('persons',PersonController::class);
     Route::post('delete-image', [PersonController::class, 'deleteImage'])->name('deleteImage');
     Route::resource('shipments',ShipmentController::class);
+    Route::get('update-date-shipment/{id}/{date}',[ShipmentController::class, 'update_date']);
 
     Route::get('reports-movements',[ReportController::class, 'reports_movements'])->name('reports.movements');
     Route::get('reports-movements-sum-by-service',[ReportController::class, 'reports_movements_sum_by_service'])->name('reports.reports_movements_sum_by_service');
     Route::get('export-report-movement', [ReportController::class, 'export_movements'])->name('reports.export_report_movements');
+    Route::get('export-report-movement-pdf', [ReportController::class, 'export_movements_pdf'])->name('reports.export_report_movements_pdf');
 
     Route::get('store-info',[StoreInfoController::class, 'index'])->name('store_info.get');
     Route::post('store-info',[StoreInfoController::class, 'save_store_info'])->name('store_info.post');

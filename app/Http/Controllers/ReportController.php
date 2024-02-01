@@ -10,6 +10,10 @@ use App\Models\Service;
 use App\Exports\ShipmentExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
+use App\Models\StoreInfo;
+
 class ReportController extends Controller
 {
     public function reports_movements(Request $request){
@@ -70,7 +74,7 @@ class ReportController extends Controller
 
         $sender = @$request->get('sender');
 
-        if(!empty($sender)){
+        if(!empty($sender) && $sender != -1){
             $shipments->where('shipments.sender_person_id',$sender);
         }
 
@@ -82,6 +86,40 @@ class ReportController extends Controller
 
         $result = $shipments->orderBy('shipment_date','DESC')->get();
 
-        return Excel::download(new ShipmentExport($result), 'movements.xlsx');
+        return Excel::download(new ShipmentExport($result), 'movements_'.time().'.xlsx');
+    }
+
+    public function export_movements_pdf(Request $request){
+        $shipments = Shipment::with('sender','country','service');
+
+        $from = @$request->get('from');
+        $to = @$request->get('to');
+
+        if(!empty($from) and !empty($to)){
+            $shipments->where('shipments.shipment_date','>=',$from)->where('shipments.shipment_date','<=',$to);
+        }
+
+        $sender = @$request->get('sender');
+
+        if(!empty($sender) && $sender != -1){
+            $shipments->where('shipments.sender_person_id',$sender);
+        }
+
+        $service = @$request->get('service');
+
+        if(!empty($service)){
+            $shipments->where('shipments.service_id',$service);
+        }
+
+        $result = $shipments->orderBy('shipment_date','DESC')->get();
+
+        $store = StoreInfo::first();
+        if(!$store){
+            $store = [];
+        }
+
+        $pdf = Pdf::loadView('admin.reports.excels.movements', ['data'=>$result, 'store'=>$store]);
+
+        return $pdf->download('movements_'.time().'.pdf');
     }
 }

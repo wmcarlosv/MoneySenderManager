@@ -13,7 +13,7 @@
     </tr>
 </table>
 <br />
-<table>
+<table width="100%" border="1">
    <tr>
        <td>Date</td>
        <td>Sender Name</td>
